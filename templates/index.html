@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh‑CN">
+<head>
+    <meta charset="UTF‑8">
+    <title>网页版记账系统</title>
+    <style>
+        .box{margin:20px;padding:20px;border:1px solid #ccc; border‑radius:8px;}
+    </style>
+</head>
+<body>
+<h1>个人记账系统</h1>
+{% if msg %}<p style="color:green;">{{msg}}</p>{% endif %}
+
+<div class="box">
+    <h3>新增收支</h3>
+    <form method="post">
+        <input type="number" step="0.01" name="money" placeholder="输入金额" required>
+        <select name="category">
+            <option>餐饮</option>
+            <option>交通</option>
+            <option>娱乐</option>
+            <option>学习</option>
+            <option>其他</option>
+        </select>
+        <input type="text" name="note" placeholder="备注">
+        <button type="submit" name="income">添加收入</button>
+        <button type="submit" name="expend">添加支出</button>
+    </form>
+</div>
+
+<div class="box">
+    <h3>月度收支统计</h3>
+    <form method="post">
+        <input type="text" name="month" placeholder="2026‑06">
+        <button type="submit" name="count_month">计算收支</button>
+    </form>
+    {% if month_result %}
+        <p>总收入：{{month_result[0]}}，总支出：{{month_result[1]}}，结余：{{month_result[2]}}</p>
+    {% endif %}
+    <form method="post" action="/draw">
+        <input type="text" name="month" placeholder="输入月份绘图">
+        <button>生成消费饼图</button>
+    </form>
+</div>
+
+<div class="box">
+    <h3>全部账单</h3>
+    {% for b in bills %}
+        <p>{{b.time}}，{{b.bill_type}}，{{b.category}}，金额：{{b.money}}，备注：{{b.note}}</p>
+    {% endfor %}
+</div>
+</body>
+</html>
