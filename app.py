@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from bill_class import Bill
-from statistics import Statistic
+from bill_stat import Statistic
 
 app = Flask(__name__)
 bill_obj = Bill()
